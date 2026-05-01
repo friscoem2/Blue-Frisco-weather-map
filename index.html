@@ -18,8 +18,6 @@
   --accent: #4eb8f5;
   --gold: #f0b94a;
   --green: #4fca84;
-  --red: #f07070;
-  --amber: #f0a050;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--ink);color:var(--text);}
@@ -48,11 +46,14 @@ html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--ink);colo
 .flex1{flex:1;}
 
 /* district toggle */
-.district-btns{display:flex;gap:.35rem;flex-shrink:0;}
+.district-btns{display:flex;gap:.35rem;flex-shrink:0;overflow-x:auto;max-width:48vw;padding-bottom:2px;}
+.district-btns::-webkit-scrollbar{height:2px;}
+.district-btns::-webkit-scrollbar-thumb{background:var(--line-s);border-radius:2px;}
 .dist-btn{
   font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;
   border:1px solid var(--line);border-radius:999px;padding:.28rem .65rem;
   background:rgba(255,255,255,.04);color:var(--muted);cursor:pointer;transition:all .15s;
+  white-space:nowrap;
 }
 .dist-btn.active,.dist-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(78,184,245,.08);}
 
@@ -64,17 +65,6 @@ html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--ink);colo
   background:rgba(255,255,255,.04);color:var(--muted);cursor:pointer;transition:all .15s;
 }
 .fbtn:hover,.fbtn.active{border-color:var(--accent);color:var(--accent);background:rgba(78,184,245,.08);}
-
-/* refresh button */
-#refresh-btn{
-  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;
-  border:1px solid rgba(79,202,132,.35);border-radius:999px;padding:.28rem .7rem;
-  background:rgba(79,202,132,.08);color:var(--green);cursor:pointer;
-  transition:all .15s;flex-shrink:0;
-}
-#refresh-btn:hover{background:rgba(79,202,132,.18);}
-#refresh-btn:disabled{opacity:.4;cursor:default;}
-#refresh-btn.loading{animation:spin-border .8s linear infinite;}
 
 /* ── SIDEBAR ── */
 #sidebar{
@@ -116,21 +106,28 @@ html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--ink);colo
 .cam-item.selected{background:rgba(78,184,245,.1);border-color:rgba(78,184,245,.38);}
 .cam-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
 .cam-name{font-size:.76rem;color:var(--soft);line-height:1.2;flex:1;min-width:0;}
-.cam-road{display:block;font-family:'DM Mono',monospace;font-size:.58rem;color:var(--muted);margin-top:.1rem;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.img-badge{font-size:.55rem;font-family:'DM Mono',monospace;color:var(--gold);
-  border:1px solid rgba(240,185,74,.3);border-radius:4px;padding:.08rem .28rem;flex-shrink:0;}
-.loading-badge{font-size:.55rem;font-family:'DM Mono',monospace;color:var(--accent);
+.cam-road{
+  display:block;font-family:'DM Mono',monospace;font-size:.58rem;color:var(--muted);margin-top:.1rem;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.img-badge{
+  font-size:.55rem;font-family:'DM Mono',monospace;color:var(--gold);
+  border:1px solid rgba(240,185,74,.3);border-radius:4px;padding:.08rem .28rem;flex-shrink:0;
+}
+.loading-badge{
+  font-size:.55rem;font-family:'DM Mono',monospace;color:var(--accent);
   border:1px solid rgba(78,184,245,.3);border-radius:4px;padding:.08rem .28rem;flex-shrink:0;
-  animation:pulse 1s ease-in-out infinite;}
+  animation:pulse 1s ease-in-out infinite;
+}
 
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
 
 #count-bar{
   padding:.45rem .8rem;border-top:1px solid var(--line);
   font-family:'DM Mono',monospace;font-size:.6rem;color:var(--muted);
-  display:flex;justify-content:space-between;
+  display:flex;justify-content:space-between;gap:.75rem;
 }
+#dist-label{white-space:nowrap;}
 
 /* ── MAP ── */
 #map{position:fixed;top:50px;left:290px;right:0;bottom:0;z-index:1;transition:left .25s;}
@@ -148,24 +145,21 @@ html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--ink);colo
   border-radius:50%;animation:spin .7s linear infinite;
 }
 @keyframes spin{to{transform:rotate(360deg);}}
-.loading-text{font-family:'DM Mono',monospace;font-size:.75rem;color:var(--accent);letter-spacing:.1em;}
+.loading-text{font-family:'DM Mono',monospace;font-size:.75rem;color:var(--accent);letter-spacing:.1em;text-align:center;}
 
 /* ── POPUP ── */
 .cam-popup{min-width:260px;max-width:320px;font-family:'Outfit',sans-serif;}
 .popup-header{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.7rem;}
 .popup-name{font-size:.9rem;font-weight:600;color:#111;line-height:1.2;}
 .popup-meta{font-family:'DM Mono',monospace;font-size:.6rem;color:#666;margin-top:.18rem;text-transform:uppercase;}
-.status-badge{
-  display:inline-flex;align-items:center;gap:.28rem;flex-shrink:0;
-  font-family:'DM Mono',monospace;font-size:.58rem;text-transform:uppercase;
-  border-radius:999px;padding:.22rem .48rem;
-}
 .popup-img-wrap{
   background:#08151f;border-radius:8px;overflow:hidden;
   margin-bottom:.6rem;aspect-ratio:16/9;
   display:flex;align-items:center;justify-content:center;position:relative;
 }
-.popup-img-wrap img{width:100%;height:auto;display:block;}
+.popup-img-wrap img{
+  width:100%;height:auto;display:block;cursor:zoom-in;
+}
 .popup-no-img{
   display:flex;flex-direction:column;align-items:center;gap:.35rem;
   color:#4a6070;font-family:'DM Mono',monospace;font-size:.65rem;text-align:center;padding:.7rem;
@@ -180,32 +174,144 @@ html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--ink);colo
 }
 .popup-fetch-btn:hover{background:rgba(78,184,245,.2);}
 .popup-fetch-btn:disabled{opacity:.4;cursor:default;}
-.popup-img-spinner{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  background:rgba(8,21,31,.7);
+
+/* ── IMAGE VIEWER MODAL ── */
+#image-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:3000;
+  background:rgba(2,8,15,.92);
+  backdrop-filter:blur(10px);
+  align-items:center;
+  justify-content:center;
+  padding:64px 24px 28px;
 }
-.popup-img-spinner .s{
-  width:24px;height:24px;border:2px solid rgba(78,184,245,.2);border-top-color:var(--accent);
-  border-radius:50%;animation:spin .6s linear infinite;
+#image-modal.show{display:flex;}
+#image-modal-card{
+  position:relative;
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#image-modal-img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+  border-radius:10px;
+  box-shadow:0 18px 60px rgba(0,0,0,.55);
+  background:#02080f;
+}
+#image-modal-top{
+  position:absolute;
+  top:16px;
+  left:16px;
+  right:16px;
+  z-index:3010;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  pointer-events:none;
+}
+#image-modal-title{
+  pointer-events:auto;
+  max-width:calc(100vw - 100px);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-family:'DM Mono',monospace;
+  font-size:.72rem;
+  color:var(--soft);
+  background:rgba(9,19,34,.78);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:.45rem .75rem;
+}
+#image-modal-close{
+  pointer-events:auto;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  border:1px solid var(--line-s);
+  background:rgba(9,19,34,.85);
+  color:var(--text);
+  font-size:1.3rem;
+  line-height:1;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+}
+#image-modal-close:hover{
+  border-color:var(--accent);
+  color:var(--accent);
 }
 
 /* Leaflet overrides */
-.leaflet-popup-content-wrapper{border-radius:10px!important;padding:0!important;overflow:hidden!important;box-shadow:0 10px 36px rgba(0,0,0,.38)!important;}
+.leaflet-popup-content-wrapper{
+  border-radius:10px!important;
+  padding:0!important;
+  overflow:hidden!important;
+  box-shadow:0 10px 36px rgba(0,0,0,.38)!important;
+}
 .leaflet-popup-content{margin:0!important;width:auto!important;padding:.85rem .95rem!important;}
 .leaflet-control-attribution{font-size:.5rem!important;}
 
 /* marker */
 .cm{
-  width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.5);
+  width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.4);
+  background:rgba(78,184,245,.55);
   display:flex;align-items:center;justify-content:center;font-size:11px;
   cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.5);transition:transform .1s;
 }
 .cm:hover{transform:scale(1.25);}
-.cm.online{background:rgba(79,202,132,.82);}
-.cm.offline{background:rgba(240,112,112,.75);}
-.cm.error{background:rgba(240,160,80,.8);}
 .cm.has-img{border-color:var(--gold);box-shadow:0 0 0 2px rgba(240,185,74,.35),0 2px 8px rgba(0,0,0,.5);}
-.cm.snap-loaded{border-color:var(--green);box-shadow:0 0 0 2px rgba(79,202,132,.4),0 2px 8px rgba(0,0,0,.5);}
+.cm.snap-loaded{border-color:var(--green);background:rgba(79,202,132,.65);box-shadow:0 0 0 2px rgba(79,202,132,.4),0 2px 8px rgba(0,0,0,.5);}
+
+@media (max-width: 760px) {
+  #topbar{
+    height:auto;
+    min-height:50px;
+    flex-wrap:wrap;
+    padding:.55rem .7rem;
+    gap:.5rem;
+  }
+  .brand-title{font-size:.78rem;}
+  .brand-sub{font-size:.52rem;}
+  .sep{display:none;}
+  .stat{font-size:.56rem;}
+  .district-btns{
+    order:3;
+    width:100%;
+    max-width:100%;
+  }
+  .filter-btns{
+    order:4;
+    width:100%;
+  }
+  #sidebar{
+    top:92px;
+    width:260px;
+  }
+  #sidebar.collapsed{transform:translateX(-260px);}
+  #sb-toggle{
+    top:104px;
+    left:260px;
+  }
+  #map{
+    top:92px;
+    left:260px;
+  }
+  #layer-loading{
+    top:92px;
+    left:260px;
+  }
+  #image-modal{
+    padding:62px 10px 18px;
+  }
+}
 </style>
 </head>
 <body>
@@ -218,39 +324,50 @@ html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--ink);colo
       <div class="brand-sub">Live Camera Map</div>
     </div>
   </div>
+
   <div class="sep"></div>
-  <div class="stat"><span class="dot" style="background:var(--green);box-shadow:0 0 6px var(--green)"></span><b id="cnt-online">–</b>&nbsp;Online</div>
-  <div class="stat"><span class="dot" style="background:var(--red)"></span><b id="cnt-offline">–</b>&nbsp;Offline</div>
-  <div class="stat"><span class="dot" style="background:var(--gold);box-shadow:0 0 6px var(--gold)"></span><b id="cnt-snap">0</b>&nbsp;Snapshots</div>
+
+  <div class="stat">
+    <span class="dot" style="background:var(--gold);box-shadow:0 0 6px var(--gold)"></span>
+    <b id="cnt-snap">0</b>&nbsp;Snapshots loaded
+  </div>
+
+  <div class="stat">
+    <b id="cnt-total">–</b>&nbsp;Cameras
+  </div>
+
   <div class="sep"></div>
 
   <div class="district-btns">
-    <button class="dist-btn active" onclick="loadDistrict('DAL',this)">DAL</button>
-    <button class="dist-btn" onclick="loadDistrict('FTW',this)">FTW</button>
+    <button class="dist-btn active" onclick="loadDefaultDistricts(this)">TX</button>
+    <button class="dist-btn" onclick="loadSingleDistrict('DAL',this)">DAL</button>
+    <button class="dist-btn" onclick="loadSingleDistrict('FTW',this)">FTW</button>
+    <button class="dist-btn" onclick="loadSingleDistrict('WAC',this)">WAC</button>
+    <button class="dist-btn" onclick="loadSingleDistrict('WFS',this)">WFS</button>
+    <button class="dist-btn" onclick="loadSingleDistrict('AUS',this)">AUS</button>
   </div>
+
   <div class="sep"></div>
 
   <div class="filter-btns">
     <button class="fbtn active" onclick="setFilter('all',this)">All</button>
-    <button class="fbtn" onclick="setFilter('online',this)">Online</button>
-    <button class="fbtn" onclick="setFilter('offline',this)">Offline</button>
-    <button class="fbtn" onclick="setFilter('snap',this)">📷 Snap</button>
+    <button class="fbtn" onclick="setFilter('snap',this)">📷 Loaded</button>
   </div>
 
   <div class="flex1"></div>
-  <button id="refresh-btn" onclick="refreshVisibleSnapshots()" title="Fetch snapshots for cameras in current view">⟳ Refresh View</button>
 </div>
 
 <div id="sidebar">
   <div id="search-wrap">
-    <input id="search" type="text" placeholder="Search cameras…" oninput="renderList()"/>
+    <input id="search" type="text" placeholder="Search cameras…" oninput="applyFilter()"/>
   </div>
   <div id="cam-list"></div>
   <div id="count-bar">
     <span id="list-count">Loading…</span>
-    <span id="dist-label">DAL District</span>
+    <span id="dist-label">TX Districts</span>
   </div>
 </div>
+
 <div id="sb-toggle" onclick="toggleSidebar()">‹</div>
 
 <div id="layer-loading">
@@ -260,152 +377,298 @@ html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--ink);colo
 
 <div id="map"></div>
 
+<div id="image-modal" onclick="handleImageModalBackdrop(event)">
+  <div id="image-modal-top">
+    <div id="image-modal-title">Camera Snapshot</div>
+    <button id="image-modal-close" onclick="closeImageModal()" aria-label="Close image viewer">×</button>
+  </div>
+  <div id="image-modal-card">
+    <img id="image-modal-img" src="" alt="Expanded camera snapshot"/>
+  </div>
+</div>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 // ── CONFIG ────────────────────────────────────────────────────────────────
 const WORKER = 'https://mapmaker.frisco-em2.workers.dev/';
+const DEFAULT_DISTRICTS = ['DAL', 'FTW', 'WAC', 'WFS', 'AUS'];
 
 // ── STATE ─────────────────────────────────────────────────────────────────
-let cameras = [];           // all cameras for current district
-let snapshots = {};         // { icd_Id: { img: base64, ts: string } }
-let snapLoading = new Set();// currently fetching
-let markers = {};           // { icd_Id: { marker, cam } }
+let cameras = [];
+let snapshots = {};
+let snapLoading = new Set();
+let markers = {};
 let markerLayer;
 let currentFilter = 'all';
-let currentDistrict = 'DAL';
-let selectedId = null;
+let currentDistrict = 'TX';
+let selectedKey = null;
 
 // ── MAP ───────────────────────────────────────────────────────────────────
-const map = L.map('map', { center: [32.82, -96.80], zoom: 9, zoomControl: false });
+const map = L.map('map', {
+  center: [31.15, -97.35],
+  zoom: 7,
+  zoomControl: false
+});
+
 L.control.zoom({ position: 'bottomright' }).addTo(map);
+
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
   attribution: '© OSM © CARTO | TxDOT ITS',
-  subdomains: 'abcd', maxZoom: 19
+  subdomains: 'abcd',
+  maxZoom: 19
 }).addTo(map);
+
 markerLayer = L.layerGroup().addTo(map);
 
 // ── HELPERS ───────────────────────────────────────────────────────────────
-const statusCls = s => s === 'Device Online' ? 'online' : s === 'Device Offline' ? 'offline' : 'error';
-const statusColor = s => s === 'Device Online' ? '#4fca84' : s === 'Device Offline' ? '#f07070' : '#f0a050';
-const statusLabel = s => s.replace('Device ', '');
-const statusBadgeStyle = s => {
-  const c = statusCls(s);
-  if (c === 'online') return 'background:rgba(79,202,132,.12);color:#2fa86e;border:1px solid rgba(79,202,132,.3)';
-  if (c === 'offline') return 'background:rgba(240,112,112,.12);color:#cc4444;border:1px solid rgba(240,112,112,.3)';
-  return 'background:rgba(240,160,80,.12);color:#cc7700;border:1px solid rgba(240,160,80,.3)';
-};
+function cameraKey(cam) {
+  return `${cam.district || currentDistrict}:${cam.icd_Id}`;
+}
 
-// ── LOAD DISTRICT ─────────────────────────────────────────────────────────
-async function loadDistrict(district, btn) {
-  if (district === currentDistrict && cameras.length > 0) return;
-  currentDistrict = district;
+function escHTML(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
 
-  // Update UI
+function escAttr(value) {
+  return escHTML(value);
+}
+
+function escJS(value) {
+  return String(value ?? '')
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, "\\'")
+    .replace(/"/g, '\\"')
+    .replace(/\n/g, '\\n')
+    .replace(/\r/g, '\\r');
+}
+
+function setActiveDistrictButton(btn) {
   document.querySelectorAll('.dist-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('dist-label').textContent = district + ' District';
-  document.getElementById('list-count').textContent = 'Loading…';
+  if (btn) btn.classList.add('active');
+}
 
-  // Show overlay
+function findCameraByKey(key) {
+  return cameras.find(c => cameraKey(c) === key);
+}
+
+function showLoading(message) {
   const overlay = document.getElementById('layer-loading');
   const loadText = document.getElementById('loading-text');
+  loadText.textContent = message;
   overlay.classList.add('show');
-  loadText.textContent = 'FETCHING ' + district + ' CAMERAS…';
+}
+
+function hideLoading() {
+  document.getElementById('layer-loading').classList.remove('show');
+}
+
+// ── DISTRICT FETCHING ─────────────────────────────────────────────────────
+async function fetchDistrictCameras(district) {
+  const url = `${WORKER}?endpoint=GetCctvStatusListByDistrict&district=${encodeURIComponent(district)}`;
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    throw new Error(`${district} HTTP ${res.status}`);
+  }
+
+  const data = await res.json();
+  const districtCams = [];
+
+  for (const [roadway, cams] of Object.entries(data.roadwayCctvStatuses || {})) {
+    for (const cam of cams) {
+      districtCams.push({
+        ...cam,
+        district,
+        roadwayGroup: roadway
+      });
+    }
+  }
+
+  return districtCams;
+}
+
+// ── LOAD MULTIPLE DISTRICTS ───────────────────────────────────────────────
+async function loadDefaultDistricts(btn) {
+  currentDistrict = 'TX';
+  setActiveDistrictButton(btn || document.querySelector('.dist-btn.active'));
+
+  document.getElementById('dist-label').textContent = 'TX Districts';
+  document.getElementById('list-count').textContent = 'Loading…';
+  showLoading('FETCHING TXDOT DISTRICTS…');
+
+  cameras = [];
+  snapshots = {};
+  snapLoading.clear();
+  selectedKey = null;
+
+  const seen = new Set();
+  const failed = [];
 
   try {
-    const url = `${WORKER}?endpoint=GetCctvStatusListByDistrict&district=${district}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
+    for (let i = 0; i < DEFAULT_DISTRICTS.length; i++) {
+      const district = DEFAULT_DISTRICTS[i];
+      document.getElementById('loading-text').textContent =
+        `FETCHING ${district} CAMERAS… ${i + 1}/${DEFAULT_DISTRICTS.length}`;
 
-    // Flatten roadwayCctvStatuses into array, dedupe by icd_Id
-    const seen = new Set();
-    cameras = [];
-    for (const [roadway, cams] of Object.entries(data.roadwayCctvStatuses || {})) {
-      for (const cam of cams) {
-        if (!seen.has(cam.icd_Id)) {
-          seen.add(cam.icd_Id);
-          cameras.push(cam);
+      try {
+        const districtCams = await fetchDistrictCameras(district);
+
+        for (const cam of districtCams) {
+          const key = cameraKey(cam);
+          if (!seen.has(key)) {
+            seen.add(key);
+            cameras.push(cam);
+          }
         }
+      } catch (err) {
+        failed.push(district);
+        console.warn(`Failed to load ${district}`, err);
       }
     }
 
-    // Reset snapshots for new district
-    snapshots = {};
-    snapLoading.clear();
-    selectedId = null;
+    cameras.sort((a, b) => {
+      const d = String(a.district || '').localeCompare(String(b.district || ''));
+      if (d !== 0) return d;
+      return String(a.icd_Id || '').localeCompare(String(b.icd_Id || ''));
+    });
 
     buildMarkers();
     updateStats();
     renderList();
+    fitToCameraBounds();
 
-    overlay.classList.remove('show');
+    if (failed.length) {
+      console.warn('Some districts failed:', failed.join(', '));
+    }
+
+    hideLoading();
   } catch (err) {
-    loadText.textContent = 'ERROR: ' + err.message;
-    setTimeout(() => overlay.classList.remove('show'), 3000);
+    document.getElementById('loading-text').textContent = 'ERROR: ' + err.message;
+    setTimeout(hideLoading, 3000);
   }
+}
+
+// ── LOAD SINGLE DISTRICT ──────────────────────────────────────────────────
+async function loadSingleDistrict(district, btn) {
+  currentDistrict = district;
+  setActiveDistrictButton(btn);
+
+  document.getElementById('dist-label').textContent = district + ' District';
+  document.getElementById('list-count').textContent = 'Loading…';
+  showLoading('FETCHING ' + district + ' CAMERAS…');
+
+  cameras = [];
+  snapshots = {};
+  snapLoading.clear();
+  selectedKey = null;
+
+  try {
+    const districtCams = await fetchDistrictCameras(district);
+
+    const seen = new Set();
+
+    for (const cam of districtCams) {
+      const key = cameraKey(cam);
+      if (!seen.has(key)) {
+        seen.add(key);
+        cameras.push(cam);
+      }
+    }
+
+    cameras.sort((a, b) => String(a.icd_Id || '').localeCompare(String(b.icd_Id || '')));
+
+    buildMarkers();
+    updateStats();
+    renderList();
+    fitToCameraBounds();
+
+    hideLoading();
+  } catch (err) {
+    document.getElementById('loading-text').textContent = 'ERROR: ' + err.message;
+    setTimeout(hideLoading, 3000);
+  }
+}
+
+// ── MAP BOUNDS ────────────────────────────────────────────────────────────
+function fitToCameraBounds() {
+  const pts = cameras
+    .filter(c => Number.isFinite(Number(c.latitude)) && Number.isFinite(Number(c.longitude)))
+    .map(c => [Number(c.latitude), Number(c.longitude)]);
+
+  if (!pts.length) return;
+
+  map.fitBounds(pts, {
+    padding: [42, 42],
+    maxZoom: currentDistrict === 'TX' ? 8 : 10
+  });
 }
 
 // ── FETCH SNAPSHOT ────────────────────────────────────────────────────────
-async function fetchSnapshot(icd_Id) {
-  if (snapshots[icd_Id] || snapLoading.has(icd_Id)) return;
-  snapLoading.add(icd_Id);
+async function fetchSnapshot(key) {
+  const cam = findCameraByKey(key);
+  if (!cam) return;
 
-  // Mark marker as loading
-  updateMarkerStyle(icd_Id);
+  const district = cam.district || currentDistrict;
+
+  if (snapshots[key] || snapLoading.has(key)) return;
+
+  snapLoading.add(key);
+  updateMarkerStyle(key);
+  renderListItem(key);
 
   try {
-    const url = `${WORKER}?endpoint=GetCctvSnapshotByIcdId&district=${currentDistrict}&icdId=${encodeURIComponent(icd_Id)}`;
+    const url = `${WORKER}?endpoint=GetCctvSnapshotByIcdId&district=${encodeURIComponent(district)}&icdId=${encodeURIComponent(cam.icd_Id)}`;
     const res = await fetch(url);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+
+    if (!res.ok) {
+      throw new Error('HTTP ' + res.status);
+    }
+
     const data = await res.json();
 
     if (data.snippet) {
-      snapshots[icd_Id] = { img: data.snippet, ts: data.timestampFormatted || '' };
-      updateMarkerStyle(icd_Id);
+      snapshots[key] = {
+        img: data.snippet,
+        ts: data.timestampFormatted || '',
+        district,
+        icd_Id: cam.icd_Id
+      };
+
+      updateMarkerStyle(key);
       updateStats();
 
-      // If popup is open for this camera, refresh its content
-      const entry = markers[icd_Id];
+      const entry = markers[key];
       if (entry && entry.marker.isPopupOpen()) {
-        entry.marker.setPopupContent(buildPopupHTML(cameras.find(c => c.icd_Id === icd_Id)));
+        entry.marker.setPopupContent(buildPopupHTML(cam));
       }
 
-      // Update sidebar badge
-      renderListItem(icd_Id);
+      renderListItem(key);
     }
   } catch (err) {
-    console.warn('Snapshot fetch failed for', icd_Id, err);
+    console.warn('Snapshot fetch failed for', key, err);
   } finally {
-    snapLoading.delete(icd_Id);
-    updateMarkerStyle(icd_Id);
+    snapLoading.delete(key);
+    updateMarkerStyle(key);
+    renderListItem(key);
   }
 }
 
-// ── REFRESH VISIBLE ───────────────────────────────────────────────────────
-async function refreshVisibleSnapshots() {
-  const btn = document.getElementById('refresh-btn');
-  btn.disabled = true;
-  btn.textContent = '⟳ Fetching…';
+// ── REFRESH SINGLE SNAPSHOT ───────────────────────────────────────────────
+async function refreshSingle(key, btn) {
+  delete snapshots[key];
+  snapLoading.delete(key);
 
-  const bounds = map.getBounds();
-  const visible = cameras.filter(cam =>
-    cam.latitude && cam.longitude &&
-    bounds.contains([cam.latitude, cam.longitude]) &&
-    cam.hasSnapshot
-  );
-
-  // Batch: fetch in groups of 6 concurrently
-  const BATCH = 6;
-  for (let i = 0; i < visible.length; i += BATCH) {
-    const chunk = visible.slice(i, i + BATCH);
-    btn.textContent = `⟳ ${i}/${visible.length}`;
-    await Promise.allSettled(chunk.map(cam => fetchSnapshot(cam.icd_Id)));
-    await new Promise(r => setTimeout(r, 150)); // small delay between batches
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Loading…';
   }
 
-  btn.disabled = false;
-  btn.textContent = '⟳ Refresh View';
+  await fetchSnapshot(key);
 }
 
 // ── MARKERS ───────────────────────────────────────────────────────────────
@@ -415,124 +678,208 @@ function buildMarkers() {
 
   cameras.forEach(cam => {
     if (!cam.latitude || !cam.longitude) return;
-    const marker = L.marker([cam.latitude, cam.longitude], { icon: makeIcon(cam) })
-      .bindPopup(() => buildPopupHTML(cam), { maxWidth: 340, minWidth: 270 })
+
+    const key = cameraKey(cam);
+
+    const marker = L.marker([Number(cam.latitude), Number(cam.longitude)], {
+      icon: makeIcon(cam)
+    })
+      .bindPopup(() => buildPopupHTML(cam), {
+        maxWidth: 340,
+        minWidth: 270
+      })
       .on('click', () => {
-        selectedId = cam.icd_Id;
+        selectedKey = key;
         renderList();
-        // Auto-fetch snapshot on click if camera has one available
-        if (cam.hasSnapshot && !snapshots[cam.icd_Id]) {
-          fetchSnapshot(cam.icd_Id);
+
+        if (cam.hasSnapshot && !snapshots[key]) {
+          fetchSnapshot(key);
         }
       });
 
     markerLayer.addLayer(marker);
-    markers[cam.icd_Id] = { marker, cam };
+    markers[key] = { marker, cam };
   });
 }
 
 function makeIcon(cam) {
-  const sc = statusCls(cam.statusDescription);
-  const hasSnap = !!snapshots[cam.icd_Id];
-  const isLoading = snapLoading.has(cam.icd_Id);
-  const extraCls = isLoading ? '' : hasSnap ? 'snap-loaded' : (cam.hasSnapshot ? 'has-img' : '');
+  const key = cameraKey(cam);
+  const hasSnap = !!snapshots[key];
+  const isLoading = snapLoading.has(key);
+  const extraCls = isLoading ? '' : hasSnap ? 'snap-loaded' : '';
+
   return L.divIcon({
     className: '',
-    html: `<div class="cm ${sc} ${extraCls}" title="${cam.icd_Id}">${isLoading ? '⟳' : '📷'}</div>`,
-    iconSize: [24, 24], iconAnchor: [12, 12], popupAnchor: [0, -14]
+    html: `<div class="cm ${extraCls}" title="${escAttr(cam.district || '')} ${escAttr(cam.icd_Id)}">${isLoading ? '⟳' : '📷'}</div>`,
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+    popupAnchor: [0, -14]
   });
 }
 
-function updateMarkerStyle(icd_Id) {
-  const entry = markers[icd_Id];
+function updateMarkerStyle(key) {
+  const entry = markers[key];
   if (!entry) return;
   entry.marker.setIcon(makeIcon(entry.cam));
 }
 
 // ── POPUP HTML ────────────────────────────────────────────────────────────
 function buildPopupHTML(cam) {
-  if (!cam) return '<div style="padding:.5rem;font-family:sans-serif;color:#333">Camera not found</div>';
-  const snap = snapshots[cam.icd_Id];
-  const isLoading = snapLoading.has(cam.icd_Id);
+  if (!cam) {
+    return '<div style="padding:.5rem;font-family:sans-serif;color:#333">Camera not found</div>';
+  }
+
+  const key = cameraKey(cam);
+  const snap = snapshots[key];
+  const isLoading = snapLoading.has(key);
+
+  const safeKey = escJS(key);
+  const safeName = escHTML(cam.icd_Id);
+  const safeDistrict = escHTML(cam.district || '');
+  const safeRoadway = escHTML(cam.equipLoc?.roadway || cam.roadwayGroup || '');
+  const safeNet = escHTML(cam.netId || '');
 
   let imgSection;
+
   if (isLoading) {
     imgSection = `<div class="popup-img-wrap">
-      <div class="popup-no-img"><div class="icon">📷</div><div>Loading snapshot…</div></div>
+      <div class="popup-no-img">
+        <div class="icon">⟳</div>
+        <div>Loading snapshot…</div>
+      </div>
     </div>`;
   } else if (snap) {
     imgSection = `<div class="popup-img-wrap">
-      <img src="data:image/jpeg;base64,${snap.img}" alt="${cam.icd_Id}" loading="lazy"/>
+      <img 
+        src="data:image/jpeg;base64,${snap.img}" 
+        alt="${safeName}" 
+        loading="lazy"
+        title="Click to enlarge"
+        onclick="openImageModal('${safeKey}')"
+      />
     </div>
-    <div class="popup-ts">Captured: ${snap.ts}</div>`;
-  } else if (cam.hasSnapshot) {
-    imgSection = `<div class="popup-img-wrap">
-      <div class="popup-no-img">
-        <div class="icon">📷</div>
-        <div>Snapshot available</div>
-        <div style="font-size:.55rem;opacity:.6;margin-top:.15rem">Click button below to load</div>
-      </div>
-    </div>
-    <button class="popup-fetch-btn" onclick="fetchSnapshot('${cam.icd_Id.replace(/'/g,"\\'")}');this.disabled=true;this.textContent='Loading…'">Load Live Snapshot</button>`;
+    <div class="popup-ts">Captured: ${escHTML(snap.ts)}</div>
+    <button class="popup-fetch-btn" onclick="refreshSingle('${safeKey}',this)">⟳ Refresh Snapshot</button>`;
   } else {
     imgSection = `<div class="popup-img-wrap">
       <div class="popup-no-img">
-        <div class="icon" style="opacity:.2">📷</div>
-        <div>No snapshot available</div>
+        <div class="icon">📷</div>
+        <div>Click below to load snapshot</div>
       </div>
-    </div>`;
+    </div>
+    <button class="popup-fetch-btn" onclick="fetchSnapshot('${safeKey}');this.disabled=true;this.textContent='Loading…'">Load Snapshot</button>`;
   }
 
   return `<div class="cam-popup">
     <div class="popup-header">
       <div>
-        <div class="popup-name">${cam.icd_Id}</div>
-        <div class="popup-meta">${(cam.equipLoc?.roadway || '')} · ${cam.netId}</div>
+        <div class="popup-name">${safeName}</div>
+        <div class="popup-meta">${safeDistrict} · ${safeRoadway} · ${safeNet}</div>
       </div>
-      <span class="status-badge" style="${statusBadgeStyle(cam.statusDescription)}">${statusLabel(cam.statusDescription)}</span>
     </div>
     ${imgSection}
   </div>`;
 }
 
+// ── FULL IMAGE MODAL ──────────────────────────────────────────────────────
+function openImageModal(key) {
+  const snap = snapshots[key];
+  const cam = findCameraByKey(key);
+
+  if (!snap) return;
+
+  const modal = document.getElementById('image-modal');
+  const img = document.getElementById('image-modal-img');
+  const title = document.getElementById('image-modal-title');
+
+  img.src = `data:image/jpeg;base64,${snap.img}`;
+
+  const name = cam
+    ? `${cam.district || ''} · ${cam.icd_Id || ''} · ${cam.equipLoc?.roadway || cam.roadwayGroup || ''}`
+    : key;
+
+  title.textContent = `${name}${snap.ts ? ' · ' + snap.ts : ''}`;
+
+  modal.classList.add('show');
+}
+
+function closeImageModal() {
+  const modal = document.getElementById('image-modal');
+  const img = document.getElementById('image-modal-img');
+
+  modal.classList.remove('show');
+
+  setTimeout(() => {
+    if (!modal.classList.contains('show')) {
+      img.src = '';
+    }
+  }, 150);
+}
+
+function handleImageModalBackdrop(event) {
+  if (event.target && event.target.id === 'image-modal') {
+    closeImageModal();
+  }
+}
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') {
+    closeImageModal();
+  }
+});
+
 // ── STATS ─────────────────────────────────────────────────────────────────
 function updateStats() {
-  const online = cameras.filter(c => c.statusDescription === 'Device Online').length;
-  document.getElementById('cnt-online').textContent = online;
-  document.getElementById('cnt-offline').textContent = cameras.length - online;
   document.getElementById('cnt-snap').textContent = Object.keys(snapshots).length;
+  document.getElementById('cnt-total').textContent = cameras.length;
 }
 
 // ── FILTER ────────────────────────────────────────────────────────────────
 function setFilter(f, btn) {
   currentFilter = f;
+
   document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
+
   applyFilter();
 }
 
 function applyFilter() {
   const q = document.getElementById('search').value.toLowerCase();
+
   markerLayer.clearLayers();
 
   cameras.forEach(cam => {
-    const entry = markers[cam.icd_Id];
+    const key = cameraKey(cam);
+    const entry = markers[key];
+
     if (!entry) return;
-    if (matchesFilter(cam, q)) markerLayer.addLayer(entry.marker);
+
+    if (matchesFilter(cam, q)) {
+      markerLayer.addLayer(entry.marker);
+    }
   });
+
   renderList();
 }
 
 function matchesFilter(cam, q) {
+  const key = cameraKey(cam);
+
   const matchF =
     currentFilter === 'all' ||
-    (currentFilter === 'online' && cam.statusDescription === 'Device Online') ||
-    (currentFilter === 'offline' && cam.statusDescription !== 'Device Online') ||
-    (currentFilter === 'snap' && snapshots[cam.icd_Id]);
-  const matchQ = !q ||
-    cam.icd_Id.toLowerCase().includes(q) ||
-    (cam.equipLoc?.roadway || '').toLowerCase().includes(q) ||
-    cam.netId.toLowerCase().includes(q);
+    (currentFilter === 'snap' && snapshots[key]);
+
+  const searchable = [
+    cam.icd_Id,
+    cam.district,
+    cam.equipLoc?.roadway,
+    cam.roadwayGroup,
+    cam.netId
+  ].filter(Boolean).join(' ').toLowerCase();
+
+  const matchQ = !q || searchable.includes(q);
+
   return matchF && matchQ;
 }
 
@@ -540,46 +887,73 @@ function matchesFilter(cam, q) {
 function renderList() {
   const q = document.getElementById('search').value.toLowerCase();
   const filtered = cameras.filter(c => matchesFilter(c, q));
+
   document.getElementById('list-count').textContent = `${filtered.length} of ${cameras.length}`;
 
   document.getElementById('cam-list').innerHTML = filtered.map(cam => {
-    const col = statusColor(cam.statusDescription);
-    const sel = cam.icd_Id === selectedId ? 'selected' : '';
-    const snap = snapshots[cam.icd_Id];
-    const loading = snapLoading.has(cam.icd_Id);
+    const key = cameraKey(cam);
+    const sel = key === selectedKey ? 'selected' : '';
+    const snap = snapshots[key];
+    const loading = snapLoading.has(key);
+
     const badge = loading
       ? '<span class="loading-badge">⟳</span>'
       : snap ? '<span class="img-badge">📷</span>' : '';
-    return `<div class="cam-item ${sel}" data-id="${cam.icd_Id.replace(/"/g,'&quot;')}" onclick="selectCamera('${cam.icd_Id.replace(/'/g,"\\'")}')">
-      <div class="cam-dot" style="background:${col};box-shadow:0 0 5px ${col}"></div>
-      <div class="cam-name">${cam.icd_Id}<span class="cam-road">${cam.equipLoc?.roadway || ''} · ${cam.netId}</span></div>
+
+    return `<div 
+      class="cam-item ${sel}" 
+      data-key="${escAttr(key)}" 
+      onclick="selectCamera('${escJS(key)}')"
+    >
+      <div class="cam-dot" style="background:var(--accent);box-shadow:0 0 5px var(--accent)"></div>
+      <div class="cam-name">
+        ${escHTML(cam.icd_Id)}
+        <span class="cam-road">${escHTML(cam.district || '')} · ${escHTML(cam.equipLoc?.roadway || cam.roadwayGroup || '')} · ${escHTML(cam.netId || '')}</span>
+      </div>
       ${badge}
     </div>`;
   }).join('');
 }
 
-function renderListItem(icd_Id) {
-  const el = document.querySelector(`.cam-item[data-id="${icd_Id.replace(/"/g,'&quot;')}"]`);
+function renderListItem(key) {
+  const el = document.querySelector(`.cam-item[data-key="${CSS.escape(key)}"]`);
   if (!el) return;
-  const snap = snapshots[icd_Id];
-  const loading = snapLoading.has(icd_Id);
+
+  const snap = snapshots[key];
+  const loading = snapLoading.has(key);
   const badge = el.querySelector('.img-badge,.loading-badge');
+
   if (badge) badge.remove();
-  if (loading) el.insertAdjacentHTML('beforeend','<span class="loading-badge">⟳</span>');
-  else if (snap) el.insertAdjacentHTML('beforeend','<span class="img-badge">📷</span>');
+
+  if (loading) {
+    el.insertAdjacentHTML('beforeend', '<span class="loading-badge">⟳</span>');
+  } else if (snap) {
+    el.insertAdjacentHTML('beforeend', '<span class="img-badge">📷</span>');
+  }
 }
 
-function selectCamera(id) {
-  selectedId = id;
-  const entry = markers[id];
+function selectCamera(key) {
+  selectedKey = key;
+
+  const entry = markers[key];
   if (!entry) return;
+
   const { marker, cam } = entry;
-  map.setView([cam.latitude, cam.longitude], Math.max(map.getZoom(), 14), { animate: true });
+
+  map.setView(
+    [Number(cam.latitude), Number(cam.longitude)],
+    Math.max(map.getZoom(), 14),
+    { animate: true }
+  );
+
   marker.openPopup();
   renderList();
+
   setTimeout(() => {
     const el = document.querySelector('.cam-item.selected');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   }, 60);
 }
 
@@ -587,18 +961,22 @@ function selectCamera(id) {
 function toggleSidebar() {
   const sb = document.getElementById('sidebar');
   const tog = document.getElementById('sb-toggle');
+
   sb.classList.toggle('collapsed');
+
   const col = sb.classList.contains('collapsed');
+
   tog.textContent = col ? '›' : '‹';
-  document.getElementById('map').style.left = col ? '0' : '290px';
+  document.getElementById('map').style.left = col ? '0' : window.matchMedia('(max-width: 760px)').matches ? '260px' : '290px';
+
   setTimeout(() => map.invalidateSize(), 260);
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────
 document.getElementById('search').addEventListener('input', applyFilter);
 
-// Load DAL on start
-loadDistrict('DAL', document.querySelector('.dist-btn.active'));
+// Load default multi-district TxDOT camera set on start.
+loadDefaultDistricts(document.querySelector('.dist-btn.active'));
 </script>
 </body>
 </html>
